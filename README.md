@@ -130,9 +130,9 @@ console.log(morph);
 ```
 
 ## Morph transform data
-Morphit provudes a way to transform the value before mapping to the morphed object;
+Morphit provides a way to transform the value before mapping to the morphed object;
 You can run async as long as you return a `Promise`.
-When adding transformations, morphit will return a Promise.
+When adding transformations, morphit will return a `Promise`, you must use `.then`.
 If you add a `_concurrency` to the morph object, promises from transformations will be run in a pool of size 4, if no concurrency is provided, all transformations will be run synchronously.
 
 ```js
@@ -178,5 +178,6 @@ const morph = morphit(obj, {
     console.log(morph);
     /*
         { orders: [ { product: {}, invoice: {}, payment: {} } ], user: { value: 1 } }
+    */
 });
 ```
