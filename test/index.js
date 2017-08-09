@@ -156,15 +156,9 @@ const morph = morphit(obj2, {
 
     const morph2 = morphit(obj, {
         orders: morphit.array(':orders', {
-            product: morphit.transform('$.id', (value) => {
-                return getSomeProduct(); // it returns a Promise
-            }),
-            invoice: morphit.transform('$.id', (value) => {
-                return getSomeInvoice(); // it returns a Promise
-            }),
-            payment: morphit.transform('$.id', (value) => {
-                return getSomePayment(); // it returns a Promise
-            }),
+            product: morphit.transform('$.id', (value) => getSomeProduct(value)), // it returns a Promise,
+            invoice: morphit.transform('$.id', (value) => getSomeInvoice(value)), // it returns a Promise,
+            payment: morphit.transform('$.id', (value) => getSomePayment(value)), // it returns a Promise,
         }),
     })
     return morph2;
