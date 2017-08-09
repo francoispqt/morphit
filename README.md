@@ -1,5 +1,8 @@
 # Morphit
-Simple utility to morph an object to another one
+Simple utility to morph an object to another one.
+```js
+const morphit = require('morphit');
+```
 
 ## Basic Usage
 Basic morphit function transforms an object to another object, mapping values with dot notation.
