@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/francoispqt/lists.svg?branch=master)](https://travis-ci.org/francoispqt/lists)
+
 # Morphit
 Simple utility to morph an object to another one.
 ```js
