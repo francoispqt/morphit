@@ -5,6 +5,8 @@ Simple utility to morph an object to another one
 Basic morphit function transforms an object to another object, mapping values with dot notation.
 ```js
 const morphit = require('morphit');
+
+// object to morph
 const obj = {
     id: 1,
     first_name: 'morph',
@@ -22,6 +24,8 @@ const obj = {
         }
     ]
 };
+
+// morphing
 const morph = morphit(obj, {
     user: {
         id: ':id',
@@ -40,6 +44,28 @@ const morph = morphit(obj, {
 
 console.log(morph);
 /*
+{
+    user: {
+        id: 1,
+        firstName: 'morph',
+        lastName: 'it',
+        idOffer: 2
+    },
+    address: {
+        street: 'Champs Élysées',
+        postCode: '75000',
+        country: 'FR'
+    },
+    orders: [
+        {
+            id: 1,
+            id_products: 1,
+            id_invoice: 1,
+            id_payment: 1
+        }
+    ],
+    _morphed: true
+}
 */
 ```
 ## Array
@@ -54,9 +80,9 @@ const arr = [
     }
 ];
 
-const morph = morphit(obj, {
+const morph = morphit(arr, {
     firstName: ':first_name',
-    last_name: ':last_name',
+    lastName: ':last_name',
 });
 
 console.log(morph);
@@ -112,7 +138,8 @@ const obj = {
             id_invoice: 1,
             id_payment: 1
         }
-    ]
+    ],
+    id_user: 1
 };
 
 const getSomeProduct = (value) => {
@@ -127,17 +154,23 @@ const getSomePayment = (value) => {
     return Promise.resolve({});
 };
 
+const getSomeUser = (value) => {
+    return Promise.resolve({ value: value });
+};
+
 const morph = morphit(obj, {
     orders: morphit.array(':orders', {
         product: morphit.transform('$.id_product', getSomeProduct), // it returns a Promise,
         invoice: morphit.transform('$.id_invoice', getSomeInvoice), // it returns a Promise,
         payment: morphit.transform('$.id_payment', getSomePayment), // it returns a Promise,
     }),
+    user: morphit.transform(':id_user', getSomeUser),
+    _concurrency: 4,
 })
-.then((morph) => [
+.then((morph) => {
     console.log(morph);
     /*
-        { orders: [ { product: {}, invoice: {}, payment: {} } ] }
+        { orders: [ { product: {}, invoice: {}, payment: {} } ], user: { value: 1 } }
     */
-]);
+});
 ```
