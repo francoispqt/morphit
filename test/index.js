@@ -156,15 +156,36 @@ const morph = morphit(obj2, {
 
     const morph2 = morphit(obj, {
         orders: morphit.array(':orders', {
-            product: morphit.transform('$.id', (value) => getSomeProduct(value)), // it returns a Promise,
-            invoice: morphit.transform('$.id', (value) => getSomeInvoice(value)), // it returns a Promise,
-            payment: morphit.transform('$.id', (value) => getSomePayment(value)), // it returns a Promise,
+            product: morphit.transform('$.id_product', getSomeProduct), // it returns a Promise,
+            invoice: morphit.transform('$.id_invoice', getSomeInvoice), // it returns a Promise,
+            payment: morphit.transform('$.id_payment', getSomePayment), // it returns a Promise,
         }),
     })
     return morph2;
 })
 .then((morph2) => {
     console.log(morph2);
+
+    const obj = {
+        users_info: [
+            {
+                first_name: 'John',
+                last_name: 'Doe',
+            },
+            {
+                first_name: 'Foo',
+                last_name: 'Bar',
+            }
+        ]
+    };
+
+    const morph = morphit(obj, {
+        users: morphit.array(':users_info', {
+            firstName: '$.first_name',
+            lastName: '$.last_name',
+        })
+    });
+    console.log(morph);
 });
 
 console.log(morph);

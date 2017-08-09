@@ -92,7 +92,9 @@ const morph = morphit(obj, {
 
 console.log(morph);
 /*
-
+{ users:
+   [ { firstName: 'John', lastName: 'Doe' },
+     { firstName: 'Foo', lastName: 'Bar' } ] }
 */
 ```
 
@@ -113,11 +115,23 @@ const obj = {
     ]
 };
 
+const getSomeProduct = (value) => {
+    return Promise.resolve({});
+};
+
+const getSomeInvoice = (value) => {
+    return Promise.resolve({});
+};
+
+const getSomePayment = (value) => {
+    return Promise.resolve({});
+};
+
 const morph = morphit(obj, {
     orders: morphit.array(':orders', {
-        product: morphit.transform('$.id', (value) => getSomeProduct(value)), // it returns a Promise,
-        invoice: morphit.transform('$.id', (value) => getSomeInvoice(value)), // it returns a Promise,
-        payment: morphit.transform('$.id', (value) => getSomePayment(value)), // it returns a Promise,
+        product: morphit.transform('$.id_product', getSomeProduct), // it returns a Promise,
+        invoice: morphit.transform('$.id_invoice', getSomeInvoice), // it returns a Promise,
+        payment: morphit.transform('$.id_payment', getSomePayment), // it returns a Promise,
     }),
 })
 .then((morph) => [
