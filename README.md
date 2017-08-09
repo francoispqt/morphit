@@ -27,7 +27,11 @@ const obj = {
             id_invoice: 1,
             id_payment: 1
         }
-    ]
+    ],
+    date: {
+        created: '2017-01-01',
+        updated: '2017-01-02',
+    }
 };
 
 // morphing
@@ -37,6 +41,8 @@ const morph = morphit(obj, {
         firstName: ':first_name',
         lastName: ':last_name',
         idOffer: ':id_offer',
+        creationDate: ':date.created',
+        updateDate: ':date.updated',
     },
     address: {
         street: ':street',
@@ -54,7 +60,9 @@ console.log(morph);
         id: 1,
         firstName: 'morph',
         lastName: 'it',
-        idOffer: 2
+        idOffer: 2,
+        creationDate: '2017-01-01',
+        updateDate: '2017-01-02',
     },
     address: {
         street: 'Champs Élysées',

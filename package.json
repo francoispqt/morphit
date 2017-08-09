@@ -1,6 +1,6 @@
 {
   "name": "morphit",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Utility to morph easily an object to another object",
   "main": "index.js",
   "directories": {
