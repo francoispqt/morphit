@@ -9,10 +9,27 @@
   "scripts": {
     "test": "node test"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "francoispqt",
+  "license": "MIT",
   "dependencies": {
     "def-error": "0.9.2",
     "lodash": "4.17.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francoispqt/morphit.git"
+  },
+  "keywords": [
+    "morphing",
+    "js",
+    "async",
+    "promise",
+    "transformation",
+    "object"
+  ],
+  "bugs": {
+    "url": "https://github.com/francoispqt/morphit/issues"
+  },
+  "homepage": "https://github.com/francoispqt/morphit#readme"
 }
