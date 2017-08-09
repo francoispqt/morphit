@@ -92,7 +92,7 @@ console.log(morph);
 ```
 
 ## Nested array morphing
-You can morph an array nested in an morphing.
+You can morph an array nested in an morphing using `morphit.each`.
 ```js
 const morphit = require('morphit');
 
@@ -110,7 +110,7 @@ const obj = {
 };
 
 const morph = morphit(obj, {
-    users: morphit.array(':users_info', {
+    users: morphit.each(':users_info', {
         firstName: '$.first_name',
         lastName: '$.last_name',
     });
@@ -128,6 +128,7 @@ console.log(morph);
 Morphit provudes a way to transform the value before mapping to the morphed object;
 You can run async as long as you return a `Promise`.
 When adding transformations, morphit will return a Promise.
+If you add a `_concurrency` to the morph object, promises from transformations will be run in a pool of size 4, if no concurrency is provided, all transformations will be run synchronously.
 
 ```js
 const obj = {
@@ -159,10 +160,11 @@ const getSomeUser = (value) => {
 };
 
 const morph = morphit(obj, {
-    orders: morphit.array(':orders', {
+    orders: morphit.each(':orders', {
         product: morphit.transform('$.id_product', getSomeProduct), // it returns a Promise,
         invoice: morphit.transform('$.id_invoice', getSomeInvoice), // it returns a Promise,
         payment: morphit.transform('$.id_payment', getSomePayment), // it returns a Promise,
+        user: morphit.transform(':id_user', getSomeUser),
     }),
     user: morphit.transform(':id_user', getSomeUser),
     _concurrency: 4,
@@ -171,6 +173,5 @@ const morph = morphit(obj, {
     console.log(morph);
     /*
         { orders: [ { product: {}, invoice: {}, payment: {} } ], user: { value: 1 } }
-    */
 });
 ```

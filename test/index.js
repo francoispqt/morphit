@@ -94,7 +94,7 @@ const tests = [
         };
 
         const morph = morphit(obj, {
-            users: morphit.array(':users_info', {
+            users: morphit.each(':users_info', {
                 firstName: '$.first_name',
                 lastName: '$.last_name',
             }),
@@ -147,17 +147,18 @@ const tests = [
         };
 
         const morph = morphit(obj, {
-            orders: morphit.array(':orders', {
+            orders: morphit.each(':orders', {
                 product: morphit.transform('$.id_product', getSomeProduct), // it returns a Promise,
                 invoice: morphit.transform('$.id_invoice', getSomeInvoice), // it returns a Promise,
                 payment: morphit.transform('$.id_payment', getSomePayment), // it returns a Promise,
+                user: morphit.transform(':id_user', getSomeUser),
             }),
             user: morphit.transform(':id_user', getSomeUser),
             _concurrency: 4,
         })
         .then((morph) => {
             assert.deepEqual(
-                { orders: [ { product: {}, invoice: {}, payment: {} } ], user: { value: 1 } },
+                { orders: [ { product: {}, invoice: {}, payment: {}, user: { value: 1 } } ], user: { value: 1 } },
                 morph,
                 'Morph should be equal to value provded'
             );
